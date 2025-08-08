@@ -1,0 +1,404 @@
+<!-- GPS-sivun omat CSS:t -->
+<link rel="stylesheet" href="/Pages/Page3/local-css/kolmassivu.css">
+
+<main class="hero">
+<div class="top-section">
+  <div class="welcome-box">
+    <h2>Ajohistoria</h2>
+    <p>
+      Täältä löydät matkasi. <br><br>
+      Onpas tullut ajokilometrejä.
+      Voit katsoa miten paljon olet ajanut työmatkoja vs. vapaa-ajan matkoja.
+    </p>
+  </div>
+
+<section class="trip-form">
+  <h2 id="formTitle">Uusi ajomatka</h2>
+  
+  <!-- Näytetään esitäytettyjen tietojen ilmoitus -->
+  <div class="prefilled-info" id="prefilledInfo" style="display: none;">
+    <h4 id="prefilledTitle">📍 GPS-matka ladattu</h4>
+    <p id="prefilledMessage">Lomake on esitäytetty viimeisimmän GPS-matkan tiedoilla. Tarkista ja muokkaa tietoja tarpeen mukaan.</p>
+    <button class="clear-data-btn" onclick="clearPrefilledData()">Tyhjennä esitäytetyt tiedot</button>
+  </div>
+  
+
+  <!-- Muokkaustilan ilmoitus -->
+<div class="edit-mode-info" id="editModeInfo" style="display: none;">
+  <h4>✏️ Muokkaat matkaa</h4>
+  <p>Teet muutoksia olemassa olevaan matkaan. Tallenna muutokset tai peruuta.</p>
+  <div class="edit-buttons">
+    <button class="cancel-edit-btn" onclick="cancelEdit()">Peruuta muokkaus</button>
+    <button class="delete-btn" onclick="deleteCurrentTrip()">🗑️ Poista matka</button>
+  </div>
+</div>
+  
+  <!-- Lomake -->
+  <form class="trip-form" action="/submit-trip" method="POST" id="tripForm">
+    <!-- Piilotettu kenttä matkan ID:lle muokkaustilassa -->
+    <input type="hidden" id="tripId" name="tripId" value="">
+    <input type="hidden" id="isEdit" name="isEdit" value="false">
+    
+    <label for="date">Päivämäärä:</label>
+    <input type="date" id="date" name="date" required>
+
+    <label for="from">Lähtöpaikka:</label>
+    <input type="text" id="from" name="from" required placeholder="Syötä lähtöpaikka">
+
+    <label for="to">Kohde:</label>
+    <input type="text" id="to" name="to" required placeholder="Syötä kohde">
+
+    <label for="distanceField">Matkan pituus:</label>
+    <input type="text" id="distanceField" name="distance" placeholder="0.00 km">
+
+    <label for="type">Matkan tyyppi:</label>
+    <select id="type" name="type" required>
+      <option value="">Valitse matkan tyyppi</option>
+      <option value="työ">Työmatka</option>
+      <option value="yksityinen">Yksityisajo</option>
+    </select>
+
+    <button type="submit" id="submitBtn">Tallenna matka</button>
+  </form>
+</section>
+
+<!-- Yhteenveto -->
+    <div class="trip-summary">
+      <h3>Yhteenveto</h3>
+      <div class="summary-stats">
+        <div class="stat">
+          <span class="stat-label">Yhteensä matkoja:</span>
+          <span class="stat-value"><%= trips.length %> kpl</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Työmatkoja:</span>
+          <span class="stat-value"><%= trips.filter(t => t.purpose === 'työ').length %> kpl</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Yksityisajoa:</span>
+          <span class="stat-value"><%= trips.filter(t => t.purpose === 'yksityinen').length %> kpl</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Kokonaismatka:</span>
+          <span class="stat-value">
+            <%= trips.reduce((sum, t) => sum + (t.distance || 0), 0).toFixed(1) %> km
+          </span>
+        </div>
+      </div>
+</div>  
+
+
+<!-- Matkahistoria-osio - PÄIVITETTY VERSIO -->
+<section class="trip-history">
+  <h2>Matkahistoria</h2>
+  
+  <% if (trips && trips.length > 0) { %>
+    <div class="trips-container">
+      <% trips.forEach(function(trip, index) { %>
+        <div class="trip-card" 
+             onclick="editTrip('<%= trip._id || index %>')"
+             data-trip-id="<%= trip._id || index %>"
+             data-trip-date="<%= new Date(trip.startTime).toISOString().split('T')[0] %>"
+             data-trip-from="<%= trip.startLocation.address || 'Tuntematon lähtöpaikka' %>"
+             data-trip-to="<%= trip.endLocation.address || 'Tuntematon kohde' %>"
+             data-trip-distance="<%= trip.distance ? trip.distance.toFixed(1) : '0' %>"
+             data-trip-type="<%= trip.purpose %>"
+             style="cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s;">
+          
+          <div class="trip-header">
+            <span class="trip-date">
+              <%= new Date(trip.startTime).toLocaleDateString('fi-FI') %>
+            </span>
+            <span class="trip-type <%= trip.purpose === 'työ' ? 'work-trip' : 'personal-trip' %>">
+              <%= trip.purpose === 'työ' ? '💼 Työmatka' : '🚗 Yksityisajo' %>
+            </span>
+            <span class="edit-hint">✏️ Klikkaa muokataksesi</span>
+          </div>
+          
+          <div class="trip-details">
+            <div class="route">
+              <span class="from">📍 <%= trip.startLocation.address || 'Tuntematon lähtöpaikka' %></span>
+              <span class="arrow">→</span>
+              <span class="to">🎯 <%= trip.endLocation.address || 'Tuntematon kohde' %></span>
+            </div>
+            
+            <div class="distance">
+              <span class="distance-value">
+                📏 <%= trip.distance ? trip.distance.toFixed(1) + ' km' : 'Ei tietoa' %>
+              </span>
+            </div>
+          </div>
+          
+          <div class="trip-time">
+            <small>Tallennettu: <%= new Date(trip.startTime).toLocaleString('fi-FI') %></small>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+    
+  <% } else { %>
+    <div class="no-trips">
+      <p>🚗 Ei tallennettuja matkoja vielä.</p>
+      <p>Täytä yllä oleva lomake tai käytä GPS-toimintoa tallentaaksesi ensimmäisen matkasi!</p>
+    </div>
+  <% } %>
+</section>
+
+<script>
+// Muuttuja joka pitää kirjaa muokkaustilasta
+let isEditMode = false;
+let currentEditId = null;
+
+// Funktio matkan muokkausta varten
+function editTrip(tripId) {
+    console.log('Muokataan matkaa ID:', tripId);
+    
+    // Etsi matkakortti data-attribuuttien perusteella
+    const tripCard = document.querySelector(`[data-trip-id="${tripId}"]`);
+    
+    if (!tripCard) {
+        console.error('Matkakorttia ei löytynyt ID:llä:', tripId);
+        return;
+    }
+    
+    // Hae matkan tiedot data-attribuuteista
+    const tripData = {
+        id: tripId,
+        date: tripCard.getAttribute('data-trip-date'),
+        from: tripCard.getAttribute('data-trip-from'),
+        to: tripCard.getAttribute('data-trip-to'),
+        distance: tripCard.getAttribute('data-trip-distance'),
+        type: tripCard.getAttribute('data-trip-type')
+    };
+    
+    console.log('Matkan tiedot:', tripData);
+    
+    // Siirry muokkaustilaan
+    enterEditMode(tripData);
+    
+    // Vieritä lomakkeeseen
+    document.querySelector('.trip-form').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+    });
+}
+
+// Funktio muokkaustilaan siirtymiseen
+function enterEditMode(tripData) {
+    isEditMode = true;
+    currentEditId = tripData.id;
+    
+    // Muuta lomakkeen otsikko ja painike
+    document.getElementById('formTitle').textContent = 'Muokkaa ajomatkaa';
+    document.getElementById('submitBtn').textContent = 'Tallenna muutokset';
+    
+    // Lisää muokkaus-luokka formille
+    document.querySelector('.trip-form').classList.add('edit-mode-active');
+    
+    // Täytä lomakkeen kentät
+    document.getElementById('tripId').value = tripData.id;
+    document.getElementById('isEdit').value = 'true';
+    document.getElementById('date').value = tripData.date;
+    document.getElementById('from').value = tripData.from;
+    document.getElementById('to').value = tripData.to;
+    document.getElementById('distanceField').value = tripData.distance + ' km';
+    document.getElementById('type').value = tripData.type;
+    
+    // Näytä muokkaustilan ilmoitus
+    document.getElementById('editModeInfo').style.display = 'block';
+    
+    // Piilota GPS-ilmoitus jos se on näkyvissä
+    document.getElementById('prefilledInfo').style.display = 'none';
+    
+    // Poista GPS-tiedot localStorage:sta jos niitä on
+    localStorage.removeItem('latestTripData');
+    
+    // Korosta valittu matkakortti
+    highlightSelectedTrip(tripData.id);
+    
+    console.log('Siirrytty muokkaustilaan matkalle:', tripData.id);
+}
+
+// Funktio muokkauksen peruuttamiseen
+function cancelEdit() {
+    console.log('Peruutetaan muokkaus');
+    
+    // Palaa normaalitilaan
+    exitEditMode();
+    
+    // Tyhjennä lomake
+    clearForm();
+    
+    // Tarkista GPS-tiedot uudelleen
+    checkForGPSData();
+}
+
+// Funktio muokkaustilasta poistumiseen
+function exitEditMode() {
+    isEditMode = false;
+    currentEditId = null;
+    
+    // Palauta lomakkeen alkuperäiset tekstit
+    document.getElementById('formTitle').textContent = 'Uusi ajomatka';
+    document.getElementById('submitBtn').textContent = 'Tallenna matka';
+    
+    // Poista muokkaus-luokka
+    document.querySelector('.trip-form').classList.remove('edit-mode-active');
+    
+    // Piilota muokkaustilan ilmoitus
+    document.getElementById('editModeInfo').style.display = 'none';
+    
+    // Tyhjennä piilotetut kentät
+    document.getElementById('tripId').value = '';
+    document.getElementById('isEdit').value = 'false';
+    
+    // Poista korostus kaikista matkakorteista
+    removeAllHighlights();
+    
+    console.log('Poistuttu muokkaustilasta');
+}
+
+// Funktio matkakortin korostamiseen
+function highlightSelectedTrip(tripId) {
+    // Poista vanhat korostukset
+    removeAllHighlights();
+    
+    // Korosta valittu kortti
+    const selectedCard = document.querySelector(`[data-trip-id="${tripId}"]`);
+    if (selectedCard) {
+        selectedCard.style.borderColor = '#007bff';
+        selectedCard.style.backgroundColor = '#f8f9fa';
+        selectedCard.classList.add('selected-trip');
+    }
+}
+
+// Funktio kaikkien korostusten poistamiseen
+function removeAllHighlights() {
+    const allCards = document.querySelectorAll('.trip-card');
+    allCards.forEach(card => {
+        card.style.borderColor = 'transparent';
+        card.style.backgroundColor = '';
+        card.classList.remove('selected-trip');
+    });
+}
+
+// Funktio lomakkeen tyhjentämiseen
+function clearForm() {
+    document.getElementById('date').value = '';
+    document.getElementById('from').value = '';
+    document.getElementById('to').value = '';
+    document.getElementById('distanceField').value = '';
+    document.getElementById('type').value = '';
+}
+
+// Funktio GPS-tietojen tarkistamiseen
+function checkForGPSData() {
+    const tripData = localStorage.getItem('latestTripData');
+    
+    if (tripData && !isEditMode) {
+        try {
+            const trip = JSON.parse(tripData);
+            
+            if (trip.date) {
+                document.getElementById('date').value = trip.date;
+            }
+            
+            if (trip.distance) {
+                document.getElementById('distanceField').value = trip.distance + ' km';
+            }
+            
+            if (trip.startLocation) {
+                if (typeof trip.startLocation === 'object' && trip.startLocation.address) {
+                    document.getElementById('from').value = trip.startLocation.address;
+                } else if (typeof trip.startLocation === 'string') {
+                    document.getElementById('from').value = trip.startLocation;
+                }
+            }
+            
+            if (trip.endLocation) {
+                if (typeof trip.endLocation === 'object' && trip.endLocation.address) {
+                    document.getElementById('to').value = trip.endLocation.address;
+                } else if (typeof trip.endLocation === 'string') {
+                    document.getElementById('to').value = trip.endLocation;
+                }
+            }
+            
+            document.getElementById('prefilledInfo').style.display = 'block';
+            console.log('GPS-matkan tiedot ladattu:', trip);
+            
+        } catch (error) {
+            console.error('Virhe GPS-tietojen lataamisessa:', error);
+        }
+    }
+}
+
+// Päivitetty clearPrefilledData funktio
+function clearPrefilledData() {
+    // Jos ollaan muokkaustilassa, poistu siitä
+    if (isEditMode) {
+        exitEditMode();
+    }
+    
+    // Tyhjennä lomakkeen kentät
+    clearForm();
+    
+    // Piilota ilmoitus
+    document.getElementById('prefilledInfo').style.display = 'none';
+    
+    // Poista GPS-tiedot localStorage:sta
+    localStorage.removeItem('latestTripData');
+}
+
+// Lomakkeen lähetystapahtuman käsittely
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('tripForm');
+    
+    // Lomakkeen submit-tapahtuma
+    form.addEventListener('submit', function(e) {
+        if (isEditMode) {
+            console.log('Lähetetään muokattu matka, ID:', currentEditId);
+            
+            // Varmista että hidden-kentät ovat oikein
+            document.getElementById('tripId').value = currentEditId;
+            document.getElementById('isEdit').value = 'true';
+        } else {
+            console.log('Lähetetään uusi matka');
+            
+            // Varmista että hidden-kentät ovat oikein
+            document.getElementById('tripId').value = '';
+            document.getElementById('isEdit').value = 'false';
+        }
+    });
+    
+    // Lataa GPS-tiedot sivun latauksen yhteydessä
+    checkForGPSData();
+});
+
+// Funktio nykyisen muokattavan matkan poistamiseen
+function deleteCurrentTrip() {
+    if (!currentEditId) {
+        alert('Virhe: Ei valittua matkaa poistettavaksi');
+        return;
+    }
+    
+    if (confirm('Haluatko varmasti poistaa tämän matkan? Tätä toimintoa ei voi perua.')) {
+        // Luo form joka lähettää DELETE-pyynnön
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/delete-trip';
+        
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'tripId';
+        input.value = currentEditId;
+        
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
+
+
+</main>
+

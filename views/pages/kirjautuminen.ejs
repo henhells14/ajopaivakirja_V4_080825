@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="Pages/Page5/viidessivu.css">
+
+<main>
+    <div class="register-container" id="register-container">
+        
+        <!-- Virheviestin näyttäminen -->
+        <% if (locals.error) { %>
+            <div class="alert alert-error">
+                <%= error %>
+            </div>
+        <% } %>
+        
+        <!-- Onnistumis viestin näyttäminen -->
+        <% if (locals.success) { %>
+            <div class="alert alert-success">
+                <%= success %>
+            </div>
+        <% } %>
+        
+        <form action="/kirjaudu" method="POST">
+            <h1>Kirjaudu sisään</h1>
+
+            <div class="user-details">
+                <div class="input-box">
+                    <span class="details">Sähköposti</span>
+                    <input type="email" name="email" placeholder="Anna sähköpostiosoite" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Salasana</span>
+                    <input type="password" name="password" placeholder="Syötä salasana" required>
+                </div>
+            </div> 
+            <div class="button">
+                <input type="submit" value="Sisään">
+            </div>
+        </form>
+    </div>
+    
+    <div class="container-signin">
+        <p>Etkö ole vielä käyttäjä? <a href="/rekisterointi">Rekisteröidy tästä</a>.</p>
+    </div>
+</main>

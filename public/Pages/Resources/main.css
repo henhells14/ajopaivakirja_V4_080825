@@ -1,0 +1,356 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Roboto Condensed', sans-serif;
+    background: linear-gradient(to bottom, #74f1e7, #ffff88);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Header*/ 
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: linear-gradient(to bottom, #74f1e7, #ffff88);
+    color: #020202;
+    position: relative;
+  }
+  
+  
+  .logo {
+    
+    font-size: 2.8rem;
+    font-weight: bold;
+    font-family: fantasy;
+    letter-spacing: 1.2rem;
+  }
+  
+  .navbar {
+    position: relative;
+  }
+  
+  .nav-links {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: 1.5rem;
+    transition: all 0.6s ease-in-out;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-links li {
+    position: relative;
+  }
+  
+  .nav-links li a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.5rem;
+    font-family: "Roboto Condensed", sans-serif;
+    transition: color 0.3s ease;
+    display: inline-block;
+    padding: 4px 0; /* vähän tilaa hover-viivalle */
+    line-height: 1.2;
+    position: relative;
+  }
+  
+  /* Viiva tekstin alle hoverissa */
+  .nav-links li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0; /* muokkaa tarvittaessa */
+    width: 0%;
+    height: 2px;
+    background-color: black;
+    transition: width 0.3s ease;
+  }
+  
+  /* Hover-efekti */
+  .nav-links li a:hover {
+    color: #FFD700;
+  }
+  
+  .nav-links li a:hover::after {
+    width: 100%;
+  }
+  
+  /* Klikkaus-efekti */
+  .nav-links li a:active {
+    color: white;
+  }
+  
+  
+  .hamburger {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+  }
+  
+  /* Kaupunkikuva osion alla */
+  .cityline-section {
+    width: 100%;
+    overflow: hidden;
+    
+  }
+  
+  .cityline-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .road {
+    position: fixed;
+    top: 25vh;
+    right: -25rem; /* työntää tietä 5rem oikealle ohi ruudun reunan */
+    width: 70rem;
+    height: auto;
+    z-index: -1;
+  }
+  
+  /* Responsiivisuus */
+  @media (max-width: 988px) {
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      background-color: #ffff88;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 200px;
+      text-align: right;
+      padding: 1rem;
+    }
+  
+    .nav-links.active {
+      display: flex;
+      z-index: 9999;        /* tuo päällimmäiseksi */
+      position: absolute;   /* varmista että z-index toimii */
+      
+      
+    }
+  
+    .hamburger {
+      display: block;
+    }
+    @media (max-width: 768px){
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        font-family: fantasy;
+        letter-spacing: 1.2rem;
+      }
+      .nav-links.active {
+        display: flex;
+        z-index: 9999;        /* tuo päällimmäiseksi */
+        position: absolute;   /* varmista että z-index toimii */
+        
+      }
+    }
+  }
+  footer {
+    background-color: transparent;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .footer-links {
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-nav a {
+    color: black;
+    text-decoration: none;
+    margin: 0 0.5rem;
+  } 
+
+  /* Käyttäjätiedot navigaatiossa */
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-name {
+  color: #020202;
+  font-weight: 600;
+  font-size: 1.5rem;
+  font-family: "Roboto Condensed", sans-serif;
+  margin-right: 0.5rem;
+}
+
+/* Uloskirjautumispainike */
+.logout-btn {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-family: "Roboto Condensed", sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #ff5252, #e53e3e);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.logout-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+/* Tietosuojasivun tyylit - lisää olemassa olevaan CSS-tiedostoon */
+
+/* Turkoosi gradienttitausta tietosuojasivulle */
+
+/* Tietosuojaselosteen sisältölaatikko */
+.privacy-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Tietosuojasivun otsikot */
+.privacy-container h1 {
+    text-align: center;
+    font-size: 2.8em;
+    color: #2c3e50;
+    margin-bottom: 40px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.privacy-container h2 {
+    color: #34495e;
+    font-size: 1.6em;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    font-weight: 700;
+    border-left: 5px solid #7fcdcd;
+    padding-left: 20px;
+    transition: border-left-color 0.3s ease;
+}
+
+.privacy-container h2:hover {
+    border-left-color: #f39c12;
+}
+
+/* Tietosuojasivun tekstit */
+.privacy-container p {
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+.privacy-container ul {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+.privacy-container li {
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+}
+
+/* Fade-in animaatio */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsiivinen design */
+@media (max-width: 768px) {
+    .privacy-container {
+        margin: 30px 20px;
+        padding: 30px 25px;
+    }
+    
+    .privacy-container h1 {
+        font-size: 2.2em;
+    }
+    
+    .privacy-container h2 {
+        font-size: 1.3em;
+    }
+    
+    .privacy-container p,
+    .privacy-container li {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .privacy-container {
+        padding: 20px 15px;
+    }
+    
+    .privacy-container h1 {
+        font-size: 1.8em;
+    }
+}
+
+
+
+/* Responsiivisuus käyttäjätiedoille */
+@media (max-width: 988px) {
+  .nav-links.active .user-info {
+    margin-bottom: 0.5rem;
+  }
+  
+  .user-name {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .logout-btn {
+    font-size: 1.1rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-name {
+    font-size: 1.1rem;
+  }
+  
+  .logout-btn {
+    font-size: 1rem;
+    padding: 0.3rem 0.6rem;
+  }
+}

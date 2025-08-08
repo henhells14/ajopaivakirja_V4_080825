@@ -1,0 +1,157 @@
+
+
+/* Auto ja nappi */
+.car-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+
+.car {
+  width: clamp(200px, 50%, 400px);  /* ei liian iso mobiilissa, ei liian pieni isolle näytölle */
+  animation: bounce 2s infinite;
+}
+
+/* GPS-seurannan tiedot */
+.trip-info {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  max-width: 500px;
+  width: 90%;
+  display: none; /* Piilotettu aluksi */
+}
+
+.trip-info.active {
+  display: block;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.8rem 0;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.info-value {
+  color: #2edfc5;
+  font-weight: bold;
+}
+
+.distance-big {
+  font-size: 2rem;
+  color: #2edfc5;
+  font-weight: bold;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.startTripBtn {
+  margin-top: 1.5rem;
+  padding: 1rem 3rem;               /* enemmän sisätilaa -> isompi painike */
+  font-size: 1.5rem;                /* suurempi fontti */
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 12px;              /* hieman isommat kulmat isompaan nappiin */
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  max-width: 100%;                 /* nappi voi kasvaa tarpeen mukaan */
+  width: fit-content;              /* ei veny liian pitkäksi */
+}
+
+.startTripBtn:hover {
+  background-color: #2edfc5;
+  color: black;
+  transform: scale(1.05);
+}
+
+.startTripBtn.stop-mode {
+  background-color: #dc3545;
+}
+
+.startTripBtn.stop-mode:hover {
+  background-color: #c82333;
+  color: white;
+}
+
+/* Virheviesti */
+.error-message {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 1rem;
+  max-width: 500px;
+  width: 90%;
+  display: none;
+}
+
+/* Onnistumisviesti */
+.success-message {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 1rem;
+  max-width: 500px;
+  width: 90%;
+  display: none;
+}
+
+/* Seurannan tila-animaatio */
+.car.tracking {
+  animation: bounce 1s infinite, glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  0% { filter: drop-shadow(0 0 5px #2edfc5); }
+  100% { filter: drop-shadow(0 0 20px #2edfc5); }
+}
+
+/* Hytkyvän auton animaatio */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Responsiivisuus */
+@media (max-width: 768px) {
+  .info-row {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .info-label {
+    margin-bottom: 0.3rem;
+  }
+  
+  .distance-big {
+    font-size: 1.5rem;
+  }
+}

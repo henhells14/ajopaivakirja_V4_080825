@@ -1,0 +1,29 @@
+<header class="header">
+  <div class="logo">Ajopäiväkirja</div>
+  <nav class="navbar">
+    <ul class="nav-links">
+      <li><a href="/">Koti</a></li>
+      <li><a href="/aloita-matka">Aloita matka</a></li>
+      <li><a href="/ajohistoria">Ajohistoria</a></li>
+      <li><a href="/omasivu">Omasivu</a></li>
+      
+      <% if (typeof user !== 'undefined' && user) { %>
+        <!-- Kirjautunut käyttäjä -->
+        <li class="user-info">
+          <span class="user-name">Terve, <%= user.nimi %>!</span>
+        </li>
+        <li>
+          <form action="/uloskirjautuminen" method="POST" style="display: inline;">
+            <button type="submit" class="logout-btn">Kirjaudu ulos</button>
+          </form>
+        </li>
+      <% } else { %>
+        <!-- Ei kirjautunut -->
+        <li><a href="/rekisterointi">Rekisteröidy/Kirjaudu</a></li>
+      <% } %>
+    </ul>
+    <button class="hamburger" id="hamburger">
+      &#9776;
+    </button>
+  </nav>
+</header>

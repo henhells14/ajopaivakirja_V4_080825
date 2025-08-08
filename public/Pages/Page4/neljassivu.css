@@ -1,0 +1,181 @@
+/* mainissa kaikki oleellinen mitä sivulta löytyy */
+main {
+    display: flex;
+    flex-direction: column;
+    min-height: 50vh;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  p {
+  color: rgb(16, 16, 16);
+  font-size: medium;
+  }
+  h1 {
+    color: #000000;
+   
+  }
+  
+  /* Rekisteröitymislomake */
+  
+  .register-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    max-width: 700px;
+    width: 100%;
+    background: linear-gradient(to bottom, #74f1e7, #ffff88);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    color: whitesmoke;
+    border-radius: 24px;
+    padding: 45px;
+    padding-right: 60px;
+
+  }
+  
+  .container-signin a:visited {
+    color: #010101;
+  }
+  
+  .container-signin a {
+    color: #0e0e0e;
+  }
+  
+  /* otsikon muotoilut*/
+  .register-container .title {
+    font-size: 25px;
+    font-weight: 500;
+    position: relative;
+  } 
+  
+  .register-container .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+  }
+  
+  /* muotoiluja lomakkeen tietokohtiin*/
+  .register-container form .user-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0 12px 0;
+  }
+  
+  form .user-details .input-box {
+    margin-bottom: 15px;
+    width: calc(100% / 2 - 20px);
+  }
+  
+  .user-details .input-box .details {
+    display: block;
+     font-weight: 500;
+     margin-bottom: 5px;
+  }
+  
+  .user-details .input-box input {
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3;
+  
+  }
+  
+  /* lomakkeessa klikatun kohdan korostus */
+  .user-details .input-box input:focus,
+  .user-details .input-box input:valid {
+    border-color: black;
+  } 
+  
+  /* muokataan nappulaa */
+  
+  form input[type="radio"]{
+    display: none;
+  }
+  
+  form .button {
+    height: 45px;
+    margin: 45px 0;
+  }
+  
+  form .button input{
+    height: 100%;
+    width: 100%;
+    outline: none;
+    color: black;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: #ffde9c;
+  
+  }
+  
+  /* hoverilla napin väri vaihtuu*/
+  form .button input:hover {
+    background: #ffffff;
+  }
+  
+/* Viesti-laatikot */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.alert-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+
+  /* RESPONSIIVISUUTTA TÄLLÄ */
+  @media (max-width: 734px) {
+  
+    .register-container{
+      width: 70%;
+      display: flex;
+      margin-top: 10%;
+      margin-bottom: 5%;
+      margin-left: 5%;
+      margin-right: 5%;
+    }
+    form .user-details .input-box {
+      margin-bottom: 15px;
+      width: 90%;
+    }
+    .container form .user-details{
+      max-height: 300px;
+      overflow-y: scroll;
+    }
+    .user-details::-webkit-scrollbar{
+      width: 0;
+    }
+    .container-signin {
+      margin-bottom: 10%;
+    }
+  }
+  
+  

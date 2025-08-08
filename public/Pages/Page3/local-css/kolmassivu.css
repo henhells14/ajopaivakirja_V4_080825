@@ -1,0 +1,535 @@
+main {
+  text-align: center;
+  padding: 2rem 1rem;
+  flex-grow: 1;
+  position: relative;
+}
+
+/* Pääkontaineri - kaksi riviä */
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Yläosa - kolme elementtiä vierekkäin */
+.top-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  padding: 1rem;
+}
+
+/* Tekstilaatikko */
+.welcome-box {
+  background: linear-gradient(to bottom, #74f1e7, #ffff88);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transform: rotate(-5deg);
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.welcome-box h2 {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.welcome-box p {
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+
+/* Lomake */
+.trip-form {
+  background:linear-gradient(to bottom, #74f1e7, #ffff88);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  height: fit-content;
+}
+
+.trip-form h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.trip-form label {
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.trip-form input,
+.trip-form select {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.trip-form button {
+  margin-top: 0.8rem;
+  padding: 0.7rem;
+  font-size: 1rem;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.trip-form button:hover {
+  background-color: #2edfc5;
+  color: black;
+}
+
+/* Esitäytetyt tiedot */
+.prefilled-info {
+  background: #e8f5e8;
+  border: 1px solid #4caf50;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.prefilled-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #2e7d32;
+}
+
+.clear-data-btn {
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.clear-data-btn:hover {
+  background: #d32f2f;
+}
+
+/* Yhteenveto - nyt yläosassa */
+.trip-summary {
+  background: linear-gradient(to bottom, #74f1e7, #ffff88);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.trip-summary h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  text-align: center;
+  margin-top: 0;
+}
+
+.summary-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 3px solid #3498db;
+}
+
+.stat-label {
+  font-weight: 500;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.stat-value {
+  font-weight: bold;
+  color: #2c3e50;
+  font-size: 1rem;
+}
+
+/* Matkahistoria - nyt alaosassa scrollattavana */
+.trip-history {
+  background: linear-gradient(to bottom, #74f1e7, #ffff88);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  max-height: 600px; /* Kiinteä korkeus */
+  display: flex;
+  flex-direction: column;
+}
+
+.trip-history h2 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  margin-top: 0;
+}
+
+/* Scrollattava alue matkoille */
+.trips-container {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Scrollbar-tyylit */
+.trips-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.trips-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.trips-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.trips-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Matkakortti */
+.trip-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #3498db;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trip-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Matkan otsikko */
+.trip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.trip-date {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+.trip-type {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.work-trip {
+  background: #e3f2fd;
+  color: #1976d2;
+  border: 1px solid #bbdefb;
+}
+
+.personal-trip {
+  background: #f3e5f5;
+  color: #7b1fa2;
+  border: 1px solid #e1bee7;
+}
+
+/* Matkan tiedot */
+.trip-details {
+  margin-bottom: 1rem;
+}
+
+.route {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.from, .to {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.arrow {
+  color: #3498db;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.distance {
+  margin-top: 0.5rem;
+}
+
+.distance-value {
+  background: #f8f9fa;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.trip-time {
+  border-top: 1px solid #f1f3f4;
+  padding-top: 0.5rem;
+  margin-top: 1rem;
+}
+
+.trip-time small {
+  color: #6c757d;
+  font-size: 0.75rem;
+}
+
+/* Ei matkoja -viesti */
+.no-trips {
+  text-align: center;
+  padding: 2rem;
+  color: #6c757d;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.no-trips p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+/* Muokkaustilan tyylit */
+.edit-mode-info {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    border: 2px solid #ffc107;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(255, 193, 7, 0.2);
+}
+
+.edit-mode-info h4 {
+    color: #856404;
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+}
+
+.edit-mode-info p {
+    color: #856404;
+    margin: 0 0 15px 0;
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.cancel-edit-btn {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.cancel-edit-btn:hover {
+    background: linear-gradient(135deg, #c82333, #bd2130);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* Matkakorttien hover-efektit */
+.trip-card:hover {
+    border-color: #007bff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+}
+
+.trip-card.selected-trip {
+    border-color: #007bff !important;
+    background-color: #f8f9fa !important;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+/* Muokkausvihje */
+.edit-hint {
+    font-size: 0.8em;
+    color: #6c757d;
+    font-style: italic;
+    margin-left: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.trip-card:hover .edit-hint {
+    opacity: 1;
+}
+
+/* Lomakkeen otsikon animaatio */
+#formTitle {
+    transition: color 0.3s ease;
+}
+
+.edit-mode #formTitle {
+    color: #ffc107;
+}
+
+/* Responsiivisuus */
+@media (max-width: 768px) {
+    .edit-buttons {
+        flex-direction: column;
+    }
+    
+    .cancel-edit-btn {
+        width: 100%;
+    }
+    
+    .edit-hint {
+        display: none; /* Piilotetaan mobiilissa */
+    }
+}
+
+/* Animaatio muokkaustilaan siirtymiselle */
+.trip-form {
+    transition: all 0.3s ease;
+}
+
+.edit-mode-active .trip-form {
+    border-left: 4px solid #ffc107;
+    padding-left: 20px;
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+.cancel-edit-btn {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.cancel-edit-btn:hover {
+    background-color: #5a6268;
+}
+
+
+/* Responsiivinen muotoilu */
+@media (max-width: 1024px) {
+  .top-section {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  
+  .trip-summary {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    gap: 1.5rem;
+  }
+  
+  .top-section {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .welcome-box {
+    transform: none;
+    height: auto;
+    padding: 1.5rem;
+  }
+  
+  .welcome-box h2 {
+    font-size: 1.8rem;
+  }
+  
+  .welcome-box p {
+    font-size: 1.2rem;
+  }
+
+  .trip-history {
+    max-height: 400px;
+  }
+  
+  .trip-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .route {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .arrow {
+    transform: rotate(90deg);
+  }
+  
+  .summary-stats {
+    gap: 0.6rem;
+  }
+}

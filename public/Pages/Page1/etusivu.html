@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajopäiväkirja</title>
+  <link rel="stylesheet" href="Pages/Resources/main.css"/>
+  <link rel="stylesheet" href="Pages/Page1/local-css/etusivu.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">Ajopäiväkirja</div>
+
+  <nav class="navbar">
+    <ul class="nav-links">
+      <li><a href="/">Koti</a></li>
+      <li><a href="Pages/Page2/tokasivu.html">Aloita matka</a></li>
+      <li><a href="Pages/Page3/kolmassivu.html">Ajohistoria</a></li>
+      <li><a href="Pages/Page4/neljassivu_kirjautuminen.html">Kirjaudu/Rekisteröidy</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger">
+      &#9776;
+    </button>
+  </nav>
+</header>
+
+<!-- Kaupunkisiuetti -->
+<section class="cityline-section">
+  <img src="Pages/Resources/main-kuvat/kaupunki-siluetti.png" alt="Kaupunki" class="cityline-img">
+</section>
+<!-- Asfaltti elementti -->
+<img src="Pages/Resources/main-kuvat/asfaltti.png" alt="Tie" class="road" />
+
+<main class="hero">
+  <div class="welcome-box">
+    <h2>Tervetuloa matkalle!</h2>
+    <p>
+      Olen GPS-ajopäiväkirja ja kirjaan automatkasi. <br><br>
+      Jos haluat käyttää minua, 
+      niin rekisteröidy ensin ja lähde matkaan.
+    </p>
+  </div>
+
+  <div class="car-section">
+    <img src="Pages/Resources/main-kuvat/Auto-RED.png" alt="Piirretty auto" class="car" />
+    <button class="start-btn" id="startTripBtn">Aloita matka</button>
+
+
+    
+    <!-- <button class="start-btn">Aloita matka</button>
+    Kaupunkisiuetti -->
+  </div>
+  
+
+</main>
+
+
+
+<footer>
+  <div class="footer-links">
+    <a href="#">Tietosuojaseloste</a>
+  </div>
+  <p>© Henri Hellsten</p>
+  <div class="footer-nav">
+    <a href="#">Koti</a> | 
+    <a href="#">Aloita matka</a> | 
+    <a href="#">Ajohistoria</a> | 
+    <a href="#">Kirjaudu</a>
+  </div>
+</footer>
+
+
+<script src="Pages/Resources/main.js" defer></script>
+<script src="Pages/Page1/local-js/etusivu.js" defer></script>
+
+</body>
+</html>
