@@ -104,4 +104,15 @@ main {
     transform: none;
     margin-bottom: 2rem;
   }
+/* Responsiivisuus: vain puhelimet */
+@media (max-width: 576px) {
+  .hero {
+    font-size: 0.9rem;           /* Pienempi fonttikoko mobiilissa */
+    padding: 1rem;               /* Lisää sisämarginaalia */
+  }
+
+  .welcome-box {
+    margin-bottom: 1rem;         /* Tiiviimpi väli mobiilissa */
+  }
+ } 
 }
